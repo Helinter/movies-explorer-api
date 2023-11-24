@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 
-
-const handleErrors = (err, req, res, next) => {
-
-  // Проверка на наличие пользовательского сообщения об ошибке
+const handleErrors = (err, req, res) => {
+// Проверка на наличие пользовательского сообщения об ошибке
   const errorMessage = err.message || 'Internal Server Error';
 
   // Обработка ошибок Mongoose CastError (некорректный ID)
@@ -42,7 +40,6 @@ const handleErrors = (err, req, res, next) => {
   }
   // Остальные ошибки считаем ошибкой сервера
   return res.status(500).json({ error: errorMessage });
-  
 };
 
 module.exports = handleErrors;

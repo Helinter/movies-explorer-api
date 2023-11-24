@@ -28,10 +28,22 @@ const movieSchema = new mongoose.Schema({
   trailer: {
     type: String,
     required: true,
+    validate: {
+      validator(value) {
+        return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(value);
+      },
+      message: 'Invalid URL for trailer',
+    },
   },
   thumbnail: {
     type: String,
     required: true,
+    validate: {
+      validator(value) {
+        return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(value);
+      },
+      message: 'Invalid URL for thumbnail',
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,

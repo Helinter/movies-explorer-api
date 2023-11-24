@@ -1,9 +1,11 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Movie = require('../models/Movie');
-const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../middlewares/UnauthorizedError');
 const NotFoundError = require('../middlewares/NotFoundError');
+const { movieValidationSchema } = require('../middlewares/movieValidationSchema');
+const { userValidationSchema } = require('../middlewares/userValidationSchema');
 require('dotenv').config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -19,14 +21,17 @@ exports.getUserInfo = (req, res) => {
   });
 };
 
-
 // Обновление информации о пользователе
 exports.updateUserInfo = async (req, res, next) => {
   const { name, email } = req.body;
+
   try {
+    // Валидация данных перед обновлением пользователя
+    const validatedData = await userValidationSchema.validateAsync({ name, email });
+
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
-      { name, email },
+      validatedData,
       { new: true, runValidators: true },
     );
     if (updatedUser) {
@@ -56,8 +61,10 @@ exports.createMovie = async (req, res, next) => {
   movieData.owner = req.user._id;
 
   try {
-    // Логика создания нового фильма
-    const newMovie = await Movie.create(movieData);
+    // Валидация данных перед созданием фильма
+    const validatedData = await movieValidationSchema.validateAsync(movieData);
+
+    const newMovie = await Movie.create(validatedData);
     res.status(201).json(newMovie);
   } catch (error) {
     next(error);

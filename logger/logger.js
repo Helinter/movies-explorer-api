@@ -15,7 +15,7 @@ const requestLogger = expressWinston.logger({
       filename: `${logsFolder}/request.log`,
       format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.json()
+        winston.format.json(),
       ),
     }),
   ],
@@ -23,7 +23,7 @@ const requestLogger = expressWinston.logger({
   msg: 'HTTP {{req.method}} {{req.url}}',
   expressFormat: true,
   colorize: false,
-  ignoreRoute: function (req, res) {
+  ignoreRoute() {
     return false;
   },
 });
@@ -35,7 +35,7 @@ const errorLogger = expressWinston.errorLogger({
       filename: `${logsFolder}/error.log`,
       format: winston.format.combine(
         winston.format.timestamp(),
-        winston.format.json()
+        winston.format.json(),
       ),
     }),
   ],

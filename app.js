@@ -28,7 +28,7 @@ mongoose.connect(MONGODB_URI, {
     console.error('Error connecting to MongoDB:', err);
   });
 
-  const userController = require('./controllers/userController');
+const userController = require('./controllers/userController');
 const router = require('./routes/routes');
 
 app.use(router);
