@@ -6,6 +6,8 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 const handleErrors = require('./middlewares/errorMiddleware');
 const { requestLogger, errorLogger } = require('./logger/logger');
+const { authMiddleware } = require('./middlewares/auth');
+require('dotenv').config();
 
 const app = express();
 
@@ -43,6 +45,7 @@ app.use(errors());
 
 app.use((req, res, next) => {
   const error = new Error('Not Found');
+  authMiddleware(req, res, next);
   error.status = 404;
   next(error);
 });
