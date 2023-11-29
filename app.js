@@ -3,10 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const { errors } = require('celebrate');
+const { errors, celebrate } = require('celebrate');
 const handleErrors = require('./middlewares/errorMiddleware');
 const { requestLogger, errorLogger } = require('./logger/logger');
 const { authMiddleware } = require('./middlewares/auth');
+const { userValidationSchema } = require('./middlewares/userValidationSchema');
 require('dotenv').config();
 
 const app = express();
@@ -36,16 +37,17 @@ const router = require('./routes/routes');
 app.use(router);
 
 // Роут для логина
-app.post('/signin', userController.login);
+app.post('/signin', celebrate({ body: userValidationSchema }), userController.login);
 
 // Роут для регистрации
-app.post('/signup', userController.createUser);
+app.post('/signup', celebrate({ body: userValidationSchema }), userController.createUser);
 
 app.use(errors());
 
+app.use(authMiddleware);
+
 app.use((req, res, next) => {
   const error = new Error('Not Found');
-  authMiddleware(req, res, next);
   error.status = 404;
   next(error);
 });

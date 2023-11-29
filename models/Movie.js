@@ -24,6 +24,12 @@ const movieSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
+    validate: {
+      validator(value) {
+        return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(value);
+      },
+      message: 'Invalid URL for image',
+    },
   },
   trailer: {
     type: String,
