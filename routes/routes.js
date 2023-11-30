@@ -40,6 +40,7 @@ router.patch('/users/me', authMiddleware, async (req, res, next) => {
 router.get('/movies', authMiddleware, userController.getSavedMovies);
 router.post('/movies', authMiddleware, async (req, res, next) => {
   try {
+    req.body.owner = req.user.id;
     // Валидация данных перед передачей контроллеру
     await movieValidationSchema.validateAsync(req.body);
 

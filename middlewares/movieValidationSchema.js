@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const urlValidator = require('./urlValidator');
+const urlValidator = require('./urlValidator').string().url({ tlds: false });
 
 const validateUrl = (value, helpers) => (
   urlValidator.validate(value) ? value : helpers.error('string.url')
@@ -17,7 +17,7 @@ const movieValidationSchema = Joi.object({
   movieId: Joi.number().required(),
   nameRU: Joi.string().required(),
   nameEN: Joi.string().required(),
-  owner: Joi.string().required(),
+  owner: Joi.string(),
 });
 
 module.exports = { movieValidationSchema };
