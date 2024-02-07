@@ -1,3 +1,5 @@
 # movies-explorer-api
 Backend проекта Movies Explorer
-api.movies-find.nomoredomainsmonster.ru
+JavaScript, Express.js, MongoDB, Node.js
+
+сервер развернут на домене api.movies-find.nomoredomainsmonster.ru
