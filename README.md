@@ -1,6 +1,15 @@
-# movies-explorer-api
-Backend проекта Movies Explorer
+**Backend проекта Movies Explorer**
 
-JavaScript, Express.js, MongoDB, Node.js
+*Backend проекта Movies Explorer для поиска фильмов*
 
-сервер развернут на домене api.movies-find.nomoredomainsmonster.ru
+Реализованный функционал:
+
+-регистрация и авторизация пользователя.
+
+-редактирование данных пользователя (имя, аватар, почта).
+
+-добавление фильма в свой профиль в избранное.
+
+Используемые технологии:
+
+**JavaScript, Node.js, Express.js, MongoDB**
